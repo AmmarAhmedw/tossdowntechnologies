@@ -1,17 +1,28 @@
 import React from "react";
 import { Card, Progress, Button } from "@heroui/react";
 import { Icon } from "@iconify/react";
-import { WelcomeScreen } from "./onboarding/WelcomeScreen";
-import { RoleSelection } from "./onboarding/RoleSelection";
-import { RoleSpecificDashboard } from "./onboarding/RoleSpecificDashboard";
-import { ITSetup } from "./onboarding/ITSetup";
-import { DocumentSigning } from "./onboarding/DocumentSigning";
-import { SelfIntroduction } from "./onboarding/SelfIntroduction";
-import { HRHandbookReview } from "./onboarding/HRHandbookReview";
-import { LearningDevelopment } from "./onboarding/LearningDevelopment";
-import { TeamIntroductions } from "./onboarding/TeamIntroductions";
 
-const steps = [
+// Define interface for onboarding components
+interface OnboardingComponentProps {
+  employeeData: any;
+  updateEmployeeData: (data: any) => void;
+}
+
+// Lazy load onboarding components to reduce initial bundle size
+const WelcomeScreen = React.lazy(() => import("./onboarding/WelcomeScreen").then(module => ({ default: module.WelcomeScreen })));
+const RoleSelection = React.lazy(() => import("./onboarding/RoleSelection").then(module => ({ default: module.RoleSelection })));
+const RoleSpecificDashboard = React.lazy(() => import("./onboarding/RoleSpecificDashboard").then(module => ({ default: module.RoleSpecificDashboard })));
+const ITSetup = React.lazy(() => import("./onboarding/ITSetup").then(module => ({ default: module.ITSetup })));
+const DocumentSigning = React.lazy(() => import("./onboarding/DocumentSigning").then(module => ({ default: module.DocumentSigning })));
+const SelfIntroduction = React.lazy(() => import("./onboarding/SelfIntroduction").then(module => ({ default: module.SelfIntroduction })));
+const HRHandbookReview = React.lazy(() => import("./onboarding/HRHandbookReview").then(module => ({ default: module.HRHandbookReview })));
+const LearningDevelopment = React.lazy(() => import("./onboarding/LearningDevelopment").then(module => ({ default: module.LearningDevelopment })));
+const TeamIntroductions = React.lazy(() => import("./onboarding/TeamIntroductions").then(module => ({ default: module.TeamIntroductions })));
+
+const steps: Array<{
+  id: string;
+  component: React.ComponentType<OnboardingComponentProps>;
+}> = [
   { id: "welcome", component: WelcomeScreen },
   { id: "role", component: RoleSelection },
   { id: "it-setup", component: ITSetup },
@@ -61,10 +72,17 @@ export const OnboardingFlow: React.FC<{ onComplete: () => void }> = ({ onComplet
           </div>
         </div>
 
-        <CurrentStepComponent
-          employeeData={employeeData}
-          updateEmployeeData={(data) => setEmployeeData({ ...employeeData, ...data })}
-        />
+        <React.Suspense fallback={
+          <div className="flex items-center justify-center py-12">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-pink-500"></div>
+            <span className="ml-3 text-pink-600">Loading step...</span>
+          </div>
+        }>
+          <CurrentStepComponent
+            employeeData={employeeData}
+            updateEmployeeData={(data) => setEmployeeData({ ...employeeData, ...data })}
+          />
+        </React.Suspense>
 
         <div className="mt-8 flex justify-between">
           {currentStep > 0 && (

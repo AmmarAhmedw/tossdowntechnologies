@@ -3,16 +3,17 @@ import { Card, Button, Progress, Accordion, AccordionItem, Modal, ModalContent, 
 import { Icon } from "@iconify/react";
 import { ScheduleMeeting } from "./ScheduleMeeting";
 
+interface Milestone {
+  id: number;
+  title: string;
+  description: string;
+  completed: boolean;
+  date: string;
+}
+
 const milestones = [
   {
     id: 1,
-    title: "90-Day Review",
-    description: "Probation decision or full-time confirmation",
-    completed: false,
-    date: "2023-07-15",
-  },
-  {
-    id: 2,
     title: "Career Development Discussion",
     description: "Career path and future goals",
     completed: false,
@@ -22,12 +23,12 @@ const milestones = [
 
 export const MilestoneReviews: React.FC = () => {
   const {isOpen, onOpen, onOpenChange} = useDisclosure();
-  const [selectedMilestone, setSelectedMilestone] = React.useState(null);
+  const [selectedMilestone, setSelectedMilestone] = React.useState<Milestone | null>(null);
 
   const completedMilestones = milestones.filter(m => m.completed).length;
   const progress = (completedMilestones / milestones.length) * 100;
 
-  const handleScheduleReview = (milestone) => {
+  const handleScheduleReview = (milestone: Milestone) => {
     setSelectedMilestone(milestone);
     onOpen();
   };

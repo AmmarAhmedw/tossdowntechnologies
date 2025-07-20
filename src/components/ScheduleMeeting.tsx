@@ -2,11 +2,23 @@ import React from "react";
 import { Input, Select, SelectItem, Textarea } from "@heroui/react";
 import { Icon } from "@iconify/react";
 
+interface Milestone {
+  id: number;
+  title: string;
+  description: string;
+  completed: boolean;
+  date: string;
+}
+
+interface ScheduleMeetingProps {
+  milestone?: Milestone;
+}
+
 const timeSlots = [
   "09:00 AM", "10:00 AM", "11:00 AM", "01:00 PM", "02:00 PM", "03:00 PM", "04:00 PM"
 ];
 
-export const ScheduleMeeting: React.FC = ({ milestone }) => {
+export const ScheduleMeeting: React.FC<ScheduleMeetingProps> = ({ milestone }) => {
   return (
     <div className="space-y-4">
       <Input
@@ -20,10 +32,10 @@ export const ScheduleMeeting: React.FC = ({ milestone }) => {
         placeholder="Select a team member"
         variant="bordered"
       >
-        <SelectItem key="alice" value="Alice Johnson">Alice Johnson (HR Manager)</SelectItem>
-        <SelectItem key="bob" value="Bob Smith">Bob Smith (Team Lead)</SelectItem>
-        <SelectItem key="carol" value="Carol Williams">Carol Williams (Senior Developer)</SelectItem>
-        <SelectItem key="david" value="David Brown">David Brown (Product Manager)</SelectItem>
+        <SelectItem key="alice">Alice Johnson (HR Manager)</SelectItem>
+        <SelectItem key="bob">Bob Smith (Team Lead)</SelectItem>
+        <SelectItem key="carol">Carol Williams (Senior Developer)</SelectItem>
+        <SelectItem key="david">David Brown (Product Manager)</SelectItem>
       </Select>
       <Input
         label="Date"
@@ -38,7 +50,7 @@ export const ScheduleMeeting: React.FC = ({ milestone }) => {
         variant="bordered"
       >
         {timeSlots.map((slot) => (
-          <SelectItem key={slot} value={slot}>{slot}</SelectItem>
+          <SelectItem key={slot}>{slot}</SelectItem>
         ))}
       </Select>
       <Textarea

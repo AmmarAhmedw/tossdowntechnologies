@@ -20,11 +20,13 @@ import {
   useSortable,
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { OnboardingProgress } from "./OnboardingProgress";
-import { TaskList } from "./TaskList";
-import { NotificationBell } from "./NotificationBell";
 import { tabService, TabItem } from "../services/tabService";
 import { getComponentByName } from "../utils/componentMapper";
+
+// Lazy load dashboard components to reduce initial bundle size
+const OnboardingProgress = React.lazy(() => import("./OnboardingProgress").then(module => ({ default: module.OnboardingProgress })));
+const TaskList = React.lazy(() => import("./TaskList").then(module => ({ default: module.TaskList })));
+const NotificationBell = React.lazy(() => import("./NotificationBell").then(module => ({ default: module.NotificationBell })));
 
 interface SortableTabProps {
   tab: TabItem;
@@ -216,15 +218,29 @@ export const Dashboard: React.FC = () => {
     <div className="min-h-screen bg-pink-gradient p-8">
       <div className="flex justify-between items-start mb-8">
         <h1 className="text-4xl font-bold text-pink-700">Welcome to Your Tossdown Dashboard</h1>
-        <NotificationBell />
+        <React.Suspense fallback={<div className="w-8 h-8 animate-pulse bg-pink-200 rounded-full"></div>}>
+          <NotificationBell />
+        </React.Suspense>
       </div>
       
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
         <Card className="col-span-2 bg-white/95 backdrop-blur-sm shadow-lg">
-          <OnboardingProgress />
+          <React.Suspense fallback={
+            <div className="p-6 flex items-center justify-center">
+              <Spinner size="lg" color="primary" />
+            </div>
+          }>
+            <OnboardingProgress />
+          </React.Suspense>
         </Card>
         <Card className="bg-white/95 backdrop-blur-sm shadow-lg">
-          <TaskList />
+          <React.Suspense fallback={
+            <div className="p-6 flex items-center justify-center">
+              <Spinner size="lg" color="primary" />
+            </div>
+          }>
+            <TaskList />
+          </React.Suspense>
         </Card>
       </div>
 

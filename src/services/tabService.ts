@@ -33,22 +33,16 @@ class TabService {
         component: "YourTools"
       },
       {
-        id: "training",
-        title: "Training",
-        icon: "lucide:book-open",
-        component: "TrainingModules"
-      },
-      {
-        id: "it",
-        title: "IT Setup",
-        icon: "lucide:laptop",
-        component: "ITProvisioning"
-      },
-      {
         id: "team",
-        title: "Team",
+        title: "Meet the Team",
         icon: "lucide:users",
         component: "TeamIntroductions"
+      },
+      {
+        id: "training",
+        title: "Training & Learning",
+        icon: "lucide:book-open",
+        component: "TrainingModules"
       },
       {
         id: "milestones",
@@ -58,7 +52,7 @@ class TabService {
       },
       {
         id: "graduation",
-        title: "Graduation",
+        title: "Onboarding Wrap-up",
         icon: "lucide:award",
         component: "OnboardingGraduation"
       }
