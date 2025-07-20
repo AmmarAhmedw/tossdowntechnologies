@@ -9,7 +9,7 @@ export const WelcomeScreen: React.FC<{ employeeData: any; updateEmployeeData: (d
       <div className="flex-1 flex flex-col items-center justify-center text-center px-6">
         {/* Logo */}
         <Avatar
-          src="/assets/td.jpg"
+          src="/td.jpg"
           className="w-24 h-24 text-large mx-auto mb-6"
         />
         
