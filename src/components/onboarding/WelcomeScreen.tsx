@@ -17,7 +17,7 @@ export const WelcomeScreen: React.FC<{ employeeData: any; updateEmployeeData: (d
         <h1 className="text-3xl font-bold mb-4 text-gray-900">Welcome to tossdown technologies!</h1>
         <p className="text-xl mb-8 text-gray-700">Let's get started with your onboarding journey.</p>
         
-        {/* TossBot Introduction */}
+        {/* TossBot Introductison */}
         <div className="flex items-center justify-center mb-8">
           <Icon icon="lucide:bot" className="text-4xl text-pink-500 mr-4" />
           <p className="text-lg text-gray-800">
