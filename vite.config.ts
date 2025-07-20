@@ -23,6 +23,7 @@ export default defineConfig({
       },
     },
     chunkSizeWarningLimit: 1000, // Increase warning limit temporarily
+    minify: 'esbuild', // Use esbuild instead of terser
   },
   optimizeDeps: {
     include: ['react', 'react-dom', '@heroui/react'],
