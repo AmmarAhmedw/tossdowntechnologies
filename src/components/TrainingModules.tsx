@@ -24,7 +24,15 @@ export const TrainingModules: React.FC = () => {
             <span className="text-small text-default-500">
               {module.progress}% Complete
             </span>
-            <Button size="sm" color="primary">
+            <Button 
+              size="sm" 
+              color="primary"
+              className={`border-2 ${
+                module.progress === 100 
+                  ? "border-green-500 bg-green-50 text-green-700" 
+                  : "border-blue-500 bg-blue-50 text-blue-700"
+              }`}
+            >
               {module.progress === 100 ? (
                 <Icon icon="lucide:check" className="mr-1" />
               ) : (

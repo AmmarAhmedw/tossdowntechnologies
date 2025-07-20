@@ -74,9 +74,14 @@ export const RoleSpecificDashboard: React.FC<{ role: string }> = ({ role }) => {
           <h3 className="text-xl font-semibold">Key Tools</h3>
         </CardHeader>
         <CardBody>
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap gap-3">
             {content.tools.map((tool, index) => (
-              <Button key={index} color="secondary" variant="flat">
+              <Button 
+                key={index} 
+                color="secondary" 
+                variant="flat"
+                className="border-2 border-blue-300 hover:border-blue-400 bg-blue-50 hover:bg-blue-100 text-blue-700 font-medium px-4 py-2"
+              >
                 {tool}
               </Button>
             ))}

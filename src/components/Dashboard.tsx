@@ -53,10 +53,10 @@ const SortableTab: React.FC<SortableTabProps> = ({ tab, isActive, onClick, onRem
     <div
       ref={setNodeRef}
       style={style}
-      className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-colors ${
+      className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-all border-2 ${
         isActive 
-          ? "bg-pink-200 text-pink-800" 
-          : "text-pink-700 hover:bg-pink-100"
+          ? "bg-pink-200 text-pink-800 border-pink-400 shadow-md" 
+          : "text-pink-700 hover:bg-pink-100 border-pink-200 hover:border-pink-300"
       }`}
     >
       {/* Drag handle */}
@@ -267,7 +267,7 @@ export const Dashboard: React.FC = () => {
                   localStorage.removeItem('selected_role');
                   window.location.reload();
                 }}
-                className="ml-auto"
+                className="ml-auto border-2 border-pink-300 hover:border-pink-400 hover:bg-pink-50"
               >
                 Reset Tabs
               </Button>
@@ -329,11 +329,25 @@ export const Dashboard: React.FC = () => {
         </div>
       </Card>
 
-      <Modal isOpen={isAddModalOpen} onClose={() => setIsAddModalOpen(false)}>
+      <Modal 
+        isOpen={isAddModalOpen} 
+        onClose={() => setIsAddModalOpen(false)}
+        classNames={{
+          backdrop: "bg-black/50 backdrop-blur-sm",
+          base: "bg-gradient-to-br from-pink-50 to-white border border-pink-200 shadow-2xl",
+          header: "bg-gradient-to-r from-pink-100 to-white border-b border-pink-200",
+          body: "bg-white/80",
+          footer: "bg-gradient-to-r from-white to-pink-50 border-t border-pink-200"
+        }}
+        style={{ zIndex: 9999 }}
+      >
         <ModalContent>
-          <ModalHeader className="flex flex-col gap-1">Add New Category</ModalHeader>
+          <ModalHeader className="flex flex-col gap-1 text-gray-800">
+            <h3 className="text-xl font-semibold">Add New Category</h3>
+            <p className="text-sm text-gray-600">Create a custom dashboard section</p>
+          </ModalHeader>
           <ModalBody>
-            <div className="space-y-4">
+            <div className="space-y-2 pt-4">
               <Input
                 label="Category Name"
                 placeholder="Enter category name"
@@ -341,20 +355,25 @@ export const Dashboard: React.FC = () => {
                 onChange={(e) => setNewCategoryName(e.target.value)}
                 variant="bordered"
                 color="primary"
-              />
-              <Input
-                label="Icon (Lucide icon name)"
-                placeholder="e.g., lucide:star, lucide:heart"
-                value={newCategoryIcon}
-                onChange={(e) => setNewCategoryIcon(e.target.value)}
-                variant="bordered"
-                color="primary"
-                startContent={<Icon icon={newCategoryIcon} />}
+                classNames={{
+                  base: "bg-white",
+                  mainWrapper: "bg-white",
+                  input: "bg-white border-2 border-pink-200 focus:border-pink-500 text-gray-800 placeholder:text-gray-400 pt-2",
+                  label: "text-gray-700 font-medium mb-8 -mt-6",
+                  inputWrapper: "bg-white border-0 focus-within:border-0 shadow-sm min-h-[60px]"
+                }}
+                size="lg"
+                className="pb-4"
               />
             </div>
           </ModalBody>
           <ModalFooter>
-            <Button color="danger" variant="light" onPress={() => setIsAddModalOpen(false)}>
+            <Button 
+              color="danger" 
+              variant="light" 
+              onPress={() => setIsAddModalOpen(false)}
+              className="hover:bg-red-50"
+            >
               Cancel
             </Button>
             <Button 
@@ -362,7 +381,7 @@ export const Dashboard: React.FC = () => {
               onPress={handleAddCategory}
               isDisabled={!newCategoryName.trim() || isSaving}
               isLoading={isSaving}
-              className="bg-pink-500 text-white hover:bg-pink-600"
+              className="bg-gradient-to-r from-pink-500 to-pink-600 text-white hover:from-pink-600 hover:to-pink-700"
             >
               Add Category
             </Button>

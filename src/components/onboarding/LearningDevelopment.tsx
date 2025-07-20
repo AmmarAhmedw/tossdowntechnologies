@@ -110,11 +110,17 @@ export const LearningDevelopment: React.FC<{ employeeData: any }> = ({ employeeD
                   variant="flat"
                   onPress={() => startQuiz(module.id)}
                   isDisabled={!quizzes[module.id as keyof typeof quizzes]}
+                  className="border-2 border-pink-300 hover:border-pink-400 bg-pink-50 hover:bg-pink-100 text-pink-700 font-medium"
                 >
                   Take Quiz
                 </Button>
                 {module.progress > 0 && (
-                  <Button size="sm" variant="light" color="success">
+                  <Button 
+                    size="sm" 
+                    variant="light" 
+                    color="success"
+                    className="border-2 border-green-300 bg-green-50 text-green-700"
+                  >
                     <Icon icon="mdi:check" className="w-4 h-4" />
                   </Button>
                 )}
@@ -124,46 +130,72 @@ export const LearningDevelopment: React.FC<{ employeeData: any }> = ({ employeeD
         ))}
       </div>
 
-      <Modal isOpen={isOpen} onClose={closeQuiz} size="2xl">
+      <Modal 
+        isOpen={isOpen} 
+        onClose={closeQuiz} 
+        size="2xl"
+        classNames={{
+          backdrop: "bg-black/50 backdrop-blur-sm",
+          base: "bg-white/95 backdrop-blur-md border border-pink-200 shadow-2xl max-h-[90vh]",
+          header: "bg-gradient-to-r from-pink-50 to-white border-b border-pink-100",
+          body: "bg-white/90 max-h-[60vh] overflow-y-auto",
+          footer: "bg-gradient-to-r from-white to-pink-50 border-t border-pink-100"
+        }}
+        style={{ zIndex: 9999 }}
+      >
         <ModalContent>
-          <ModalHeader>
-            {currentQuiz && !quizResults ? "Module Quiz" : "Quiz Results"}
+          <ModalHeader className="text-gray-800">
+            <h3 className="text-xl font-semibold text-pink-700">
+              {currentQuiz && !quizResults ? "Module Quiz" : "Quiz Results"}
+            </h3>
           </ModalHeader>
-          <ModalBody>
+          <ModalBody className="py-6">
             {currentQuiz && !quizResults ? (
               <div className="space-y-6">
                 {currentQuiz.map((question: any, index: number) => (
-                  <div key={index} className="space-y-3">
-                    <h4 className="font-medium">Question {index + 1}</h4>
-                    <p className="text-gray-700">{question.question}</p>
-                    <RadioGroup
-                      value={quizAnswers[index]?.toString() || ""}
-                      onValueChange={(value) => {
-                        const newAnswers = [...quizAnswers];
-                        newAnswers[index] = parseInt(value);
-                        setQuizAnswers(newAnswers);
-                      }}
-                    >
+                  <div key={index} className="space-y-3 p-4 bg-gradient-to-r from-pink-50 to-white rounded-lg border border-pink-100">
+                    <h4 className="font-semibold text-pink-700">Question {index + 1}</h4>
+                    <p className="text-gray-700 font-medium">{question.question}</p>
+                    <div className="space-y-3">
                       {question.options.map((option: string, optionIndex: number) => (
-                        <Radio key={optionIndex} value={optionIndex.toString()}>
-                          {option}
-                        </Radio>
+                        <button
+                          key={optionIndex}
+                          onClick={() => {
+                            const newAnswers = [...quizAnswers];
+                            newAnswers[index] = optionIndex;
+                            setQuizAnswers(newAnswers);
+                          }}
+                          className={`w-full p-4 text-left rounded-lg border-2 transition-all duration-200 flex items-center space-x-3 ${
+                            quizAnswers[index] === optionIndex
+                              ? 'border-pink-500 bg-pink-100 text-pink-700 shadow-md'
+                              : 'border-gray-200 bg-white hover:border-pink-300 hover:bg-pink-50 text-gray-700'
+                          }`}
+                        >
+                          <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm ${
+                            quizAnswers[index] === optionIndex
+                              ? 'bg-pink-500 text-white'
+                              : 'bg-gray-100 text-gray-600'
+                          }`}>
+                            {String.fromCharCode(65 + optionIndex)} {/* A, B, C, D */}
+                          </div>
+                          <span className="font-medium">{option}</span>
+                        </button>
                       ))}
-                    </RadioGroup>
+                    </div>
                   </div>
                 ))}
               </div>
             ) : quizResults ? (
-              <div className="text-center space-y-4">
-                <div className="text-6xl font-bold text-primary">
+              <div className="text-center space-y-6 p-6 bg-gradient-to-r from-pink-50 to-white rounded-lg border border-pink-100">
+                <div className="text-6xl font-bold text-pink-600">
                   {quizResults.correct}/{quizResults.total}
                 </div>
-                <p className="text-lg">
+                <p className="text-lg text-gray-800 font-medium">
                   {quizResults.correct === quizResults.total 
                     ? "Perfect! You've mastered this module!" 
                     : `Good effort! You got ${quizResults.correct} out of ${quizResults.total} correct.`}
                 </p>
-                <div className="text-sm text-gray-500">
+                <div className="text-sm text-pink-600 font-medium">
                   {quizResults.correct / quizResults.total >= 0.7 
                     ? "Module progress updated!" 
                     : "Keep studying and try again!"}
@@ -171,13 +203,21 @@ export const LearningDevelopment: React.FC<{ employeeData: any }> = ({ employeeD
               </div>
             ) : null}
           </ModalBody>
-          <ModalFooter>
+          <ModalFooter className="gap-2">
             {!quizResults ? (
-              <Button color="primary" onPress={submitQuiz}>
+              <Button 
+                color="primary" 
+                onPress={submitQuiz}
+                className="bg-pink-500 hover:bg-pink-600 text-white font-medium"
+              >
                 Submit Quiz
               </Button>
             ) : (
-              <Button color="primary" onPress={closeQuiz}>
+              <Button 
+                color="primary" 
+                onPress={closeQuiz}
+                className="bg-pink-500 hover:bg-pink-600 text-white font-medium"
+              >
                 Close
               </Button>
             )}

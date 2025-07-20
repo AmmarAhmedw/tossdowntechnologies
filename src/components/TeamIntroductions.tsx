@@ -35,20 +35,24 @@ export const TeamIntroductions: React.FC = () => {
         <h2 className="text-2xl font-semibold">Meet Your Team</h2>
         <Dropdown>
           <DropdownTrigger>
-            <Button variant="bordered">
+            <Button 
+              variant="bordered"
+              className="border-pink-200 text-pink-700 hover:bg-pink-50 hover:border-pink-300 focus:border-pink-400"
+            >
               Filter: {filter} <Icon icon="lucide:chevron-down" className="ml-2" />
             </Button>
           </DropdownTrigger>
           <DropdownMenu
             aria-label="Filter team members"
             onAction={(key) => setFilter(key.toString())}
+            className="bg-white border border-pink-200 shadow-lg z-50"
           >
-            <DropdownItem key="All">All</DropdownItem>
-            <DropdownItem key="Human Resources">Human Resources</DropdownItem>
-            <DropdownItem key="Engineering">Engineering</DropdownItem>
-            <DropdownItem key="Product">Product</DropdownItem>
-            <DropdownItem key="Design">Design</DropdownItem>
-            <DropdownItem key="Analytics">Analytics</DropdownItem>
+            <DropdownItem key="All" className="hover:bg-pink-50 focus:bg-pink-100 data-[selected=true]:bg-pink-100 data-[selected=true]:text-pink-700">All</DropdownItem>
+            <DropdownItem key="Human Resources" className="hover:bg-pink-50 focus:bg-pink-100 data-[selected=true]:bg-pink-100 data-[selected=true]:text-pink-700">Human Resources</DropdownItem>
+            <DropdownItem key="Engineering" className="hover:bg-pink-50 focus:bg-pink-100 data-[selected=true]:bg-pink-100 data-[selected=true]:text-pink-700">Engineering</DropdownItem>
+            <DropdownItem key="Product" className="hover:bg-pink-50 focus:bg-pink-100 data-[selected=true]:bg-pink-100 data-[selected=true]:text-pink-700">Product</DropdownItem>
+            <DropdownItem key="Design" className="hover:bg-pink-50 focus:bg-pink-100 data-[selected=true]:bg-pink-100 data-[selected=true]:text-pink-700">Design</DropdownItem>
+            <DropdownItem key="Analytics" className="hover:bg-pink-50 focus:bg-pink-100 data-[selected=true]:bg-pink-100 data-[selected=true]:text-pink-700">Analytics</DropdownItem>
           </DropdownMenu>
         </Dropdown>
       </div>
@@ -65,11 +69,21 @@ export const TeamIntroductions: React.FC = () => {
               <p className="text-tiny text-default-400">{member.department}</p>
             </div>
             <div className="mt-6 flex justify-center space-x-2">
-              <Button size="sm" color="primary" variant="flat" onPress={() => handleMessage(member)}>
+              <Button 
+                size="sm" 
+                variant="bordered" 
+                onPress={() => handleMessage(member)}
+                className="border-pink-200 text-pink-700 hover:bg-pink-50 hover:border-pink-300 focus:border-pink-400"
+              >
                 <Icon icon="lucide:mail" className="mr-1" />
                 Message
               </Button>
-              <Button size="sm" color="secondary" variant="flat" onPress={() => handleSchedule(member)}>
+              <Button 
+                size="sm" 
+                variant="bordered" 
+                onPress={() => handleSchedule(member)}
+                className="border-pink-200 text-pink-700 hover:bg-pink-50 hover:border-pink-300 focus:border-pink-400"
+              >
                 <Icon icon="lucide:calendar" className="mr-1" />
                 Schedule
               </Button>
@@ -77,17 +91,30 @@ export const TeamIntroductions: React.FC = () => {
           </Card>
         ))}
       </div>
-      <Modal isOpen={isMessageOpen} onOpenChange={onMessageOpenChange}>
-        <ModalContent>
+      <Modal 
+        isOpen={isMessageOpen} 
+        onOpenChange={onMessageOpenChange}
+        classNames={{
+          backdrop: "bg-black/50 backdrop-blur-sm",
+          base: "z-[9999]",
+          wrapper: "z-[9999]"
+        }}
+      >
+        <ModalContent className="bg-white border border-pink-200 shadow-xl">
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1">Message {selectedMember?.name}</ModalHeader>
-              <ModalBody>
+              <ModalBody className="pt-2">
                 <Input
                   autoFocus
                   label="Subject"
                   placeholder="Enter your message subject"
                   variant="bordered"
+                  className="mb-4"
+                  labelPlacement="outside-left"
+                  classNames={{
+                    label: "text-sm font-medium text-gray-700 -mt-1"
+                  }}
                 />
                 <Textarea
                   label="Message"
@@ -96,10 +123,18 @@ export const TeamIntroductions: React.FC = () => {
                 />
               </ModalBody>
               <ModalFooter>
-                <Button color="danger" variant="light" onPress={onClose}>
+                <Button 
+                  variant="bordered" 
+                  onPress={onClose}
+                  className="border-pink-200 text-pink-700 hover:bg-pink-50 hover:border-pink-300"
+                >
                   Close
                 </Button>
-                <Button color="primary" onPress={onClose}>
+                <Button 
+                  color="primary" 
+                  onPress={onClose}
+                  className="bg-pink-600 hover:bg-pink-700 text-white"
+                >
                   Send
                 </Button>
               </ModalFooter>
@@ -107,8 +142,16 @@ export const TeamIntroductions: React.FC = () => {
           )}
         </ModalContent>
       </Modal>
-      <Modal isOpen={isScheduleOpen} onOpenChange={onScheduleOpenChange}>
-        <ModalContent>
+      <Modal 
+        isOpen={isScheduleOpen} 
+        onOpenChange={onScheduleOpenChange}
+        classNames={{
+          backdrop: "bg-black/50 backdrop-blur-sm",
+          base: "z-[9999]",
+          wrapper: "z-[9999]"
+        }}
+      >
+        <ModalContent className="bg-white border border-pink-200 shadow-xl">
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1">Schedule Meeting with {selectedMember?.name}</ModalHeader>
@@ -118,18 +161,32 @@ export const TeamIntroductions: React.FC = () => {
                   label="Meeting Title"
                   placeholder="Enter meeting title"
                   variant="bordered"
+                  labelPlacement="outside-left"
+                  classNames={{
+                    label: "text-sm font-medium text-gray-700 -mt-1"
+                  }}
                 />
                 <Input
                   type="date"
                   label="Date"
                   placeholder="Select date"
                   variant="bordered"
+                  labelPlacement="outside-left"
+                  classNames={{
+                    label: "text-sm font-medium text-gray-700 -mt-1",
+                    input: "pr-8 text-sm"
+                  }}
                 />
                 <Input
                   type="time"
                   label="Time"
                   placeholder="Select time"
                   variant="bordered"
+                  labelPlacement="outside-left"
+                  classNames={{
+                    label: "text-sm font-medium text-gray-700 -mt-1",
+                    input: "pr-8 text-sm"
+                  }}
                 />
                 <Textarea
                   label="Meeting Agenda"
@@ -138,10 +195,18 @@ export const TeamIntroductions: React.FC = () => {
                 />
               </ModalBody>
               <ModalFooter>
-                <Button color="danger" variant="light" onPress={onClose}>
+                <Button 
+                  variant="bordered" 
+                  onPress={onClose}
+                  className="border-pink-200 text-pink-700 hover:bg-pink-50 hover:border-pink-300"
+                >
                   Cancel
                 </Button>
-                <Button color="primary" onPress={onClose}>
+                <Button 
+                  color="primary" 
+                  onPress={onClose}
+                  className="bg-pink-600 hover:bg-pink-700 text-white"
+                >
                   Schedule
                 </Button>
               </ModalFooter>

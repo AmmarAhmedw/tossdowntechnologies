@@ -20,17 +20,31 @@ const timeSlots = [
 
 export const ScheduleMeeting: React.FC<ScheduleMeetingProps> = ({ milestone }) => {
   return (
-    <div className="space-y-4">
+    <div className="space-y-6 p-4 bg-gray-50 rounded-lg border border-gray-200">
       <Input
         label="Meeting Title"
         placeholder="Enter meeting title"
         defaultValue={milestone ? `${milestone.title} - Review Meeting` : ""}
         variant="bordered"
+        classNames={{
+          base: "bg-white",
+          mainWrapper: "bg-white",
+          input: "bg-white border-gray-300 focus:border-pink-500 text-gray-800 placeholder:text-gray-400",
+          label: "text-gray-700 font-medium -mt-10",
+          inputWrapper: "bg-white border-0 focus-within:border-0 shadow-sm"
+        }}
       />
       <Select
         label="Team Member"
         placeholder="Select a team member"
         variant="bordered"
+        classNames={{
+          base: "bg-white",
+          mainWrapper: "bg-white",
+          trigger: "bg-white border-gray-300 focus:border-pink-500 text-gray-800",
+          label: "text-gray-700 font-medium -mt-10",
+          listbox: "bg-white border border-gray-200 shadow-lg"
+        }}
       >
         <SelectItem key="alice">Alice Johnson (HR Manager)</SelectItem>
         <SelectItem key="bob">Bob Smith (Team Lead)</SelectItem>
@@ -43,11 +57,26 @@ export const ScheduleMeeting: React.FC<ScheduleMeetingProps> = ({ milestone }) =
         type="date"
         defaultValue={milestone ? milestone.date : ""}
         variant="bordered"
+        classNames={{
+          base: "bg-white",
+          mainWrapper: "bg-white",
+          input: "bg-white border-gray-300 focus:border-pink-500 text-gray-800 placeholder:text-gray-400",
+          label: "text-gray-700 font-medium -mt-10",
+          inputWrapper: "bg-white border-0 focus-within:border-0 shadow-sm"
+        }}
       />
       <Select
         label="Time Slot"
         placeholder="Select a time slot"
         variant="bordered"
+        className="mb-4"
+        classNames={{
+          base: "bg-white",
+          mainWrapper: "bg-white",
+          trigger: "bg-white border-gray-300 focus:border-pink-500 text-gray-800",
+          label: "text-gray-700 font-medium -mt-10",
+          listbox: "bg-white border border-gray-200 shadow-lg"
+        }}
       >
         {timeSlots.map((slot) => (
           <SelectItem key={slot}>{slot}</SelectItem>
@@ -57,6 +86,13 @@ export const ScheduleMeeting: React.FC<ScheduleMeetingProps> = ({ milestone }) =
         label="Meeting Agenda"
         placeholder="Enter the meeting agenda or topics to discuss"
         variant="bordered"
+        classNames={{
+          base: "bg-white",
+          mainWrapper: "bg-white",
+          input: "bg-white border-gray-300 focus:border-pink-500 text-gray-800 placeholder:text-gray-400",
+          label: "text-gray-700 font-medium -mt-10",
+          inputWrapper: "bg-white border-0 focus-within:border-0 shadow-sm"
+        }}
       />
     </div>
   );

@@ -30,27 +30,14 @@ export const YourTools: React.FC = () => {
   // Always start with sales role since localStorage is cleared on refresh
   const [userRole, setUserRole] = useState<'sales' | 'design' | 'engineering' | 'marketing' | 'hr' | 'operations'>('sales');
 
-  // Clear localStorage on page refresh/load
+  // Load user role from localStorage or default to sales
   useEffect(() => {
-    const handleBeforeUnload = () => {
-      localStorage.removeItem('onboarding_role');
-      localStorage.removeItem('user_role');
-      localStorage.removeItem('role');
-      localStorage.removeItem('selected_role');
-    };
-
-    // Clear localStorage immediately on component mount
-    localStorage.removeItem('onboarding_role');
-    localStorage.removeItem('user_role');
-    localStorage.removeItem('role');
-    localStorage.removeItem('selected_role');
-
-    // Also clear on page refresh
-    window.addEventListener('beforeunload', handleBeforeUnload);
-    
-    return () => {
-      window.removeEventListener('beforeunload', handleBeforeUnload);
-    };
+    const savedRole = localStorage.getItem('onboarding_role') || 
+                     localStorage.getItem('user_role') || 
+                     localStorage.getItem('role') || 
+                     localStorage.getItem('selected_role') || 
+                     'sales';
+    setUserRole(savedRole as any);
   }, []);
 
   // Debug logging
@@ -435,17 +422,24 @@ export const YourTools: React.FC = () => {
               const newRole = Array.from(keys)[0] as any;
               console.log('Changing role to:', newRole);
               setUserRole(newRole);
-              // Don't save to localStorage since we're clearing it on refresh
+              // Save to localStorage for persistence
+              localStorage.setItem('onboarding_role', newRole);
               console.log('Role changed to:', newRole);
             }}
             className="w-40"
+            classNames={{
+              popoverContent: "bg-white border border-pink-200 shadow-lg z-50",
+              listbox: "bg-white",
+              listboxWrapper: "bg-white",
+              trigger: "border border-pink-200 rounded-md hover:border-pink-300 focus:border-pink-400"
+            }}
           >
-            <SelectItem key="sales">Sales</SelectItem>
-            <SelectItem key="marketing">Marketing</SelectItem>
-            <SelectItem key="design">Design</SelectItem>
-            <SelectItem key="engineering">Engineering</SelectItem>
-            <SelectItem key="hr">Human Resources</SelectItem>
-            <SelectItem key="operations">Operations</SelectItem>
+            <SelectItem key="sales" className="hover:bg-pink-50 focus:bg-pink-100 data-[selected=true]:bg-pink-100 data-[selected=true]:text-pink-700">Sales</SelectItem>
+            <SelectItem key="marketing" className="hover:bg-pink-50 focus:bg-pink-100 data-[selected=true]:bg-pink-100 data-[selected=true]:text-pink-700">Marketing</SelectItem>
+            <SelectItem key="design" className="hover:bg-pink-50 focus:bg-pink-100 data-[selected=true]:bg-pink-100 data-[selected=true]:text-pink-700">Design</SelectItem>
+            <SelectItem key="engineering" className="hover:bg-pink-50 focus:bg-pink-100 data-[selected=true]:bg-pink-100 data-[selected=true]:text-pink-700">Engineering</SelectItem>
+            <SelectItem key="hr" className="hover:bg-pink-50 focus:bg-pink-100 data-[selected=true]:bg-pink-100 data-[selected=true]:text-pink-700">Human Resources</SelectItem>
+            <SelectItem key="operations" className="hover:bg-pink-50 focus:bg-pink-100 data-[selected=true]:bg-pink-100 data-[selected=true]:text-pink-700">Operations</SelectItem>
           </Select>
 
         </div>

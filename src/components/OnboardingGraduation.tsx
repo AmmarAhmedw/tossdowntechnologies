@@ -117,7 +117,7 @@ export const OnboardingGraduation: React.FC<OnboardingGraduationProps> = ({ onCo
   }
 
   return (
-    <Card className="p-6 text-center">
+    <Card className="p-6 text-center relative z-0">
       <Icon icon="lucide:award" className="text-6xl text-warning mb-4" />
       <h2 className="text-2xl font-semibold mb-4">Onboarding Graduation</h2>
       <Progress
@@ -160,24 +160,40 @@ export const OnboardingGraduation: React.FC<OnboardingGraduationProps> = ({ onCo
         </p>
       </div>
 
-      <div className="space-y-3">
+      <div className="space-y-3 relative z-10">
         <Button 
           color="warning" 
-          className="w-full max-w-md"
+          variant="solid"
+          className="w-full max-w-md bg-gradient-to-r from-pink-400 to-pink-500 text-white border-2 border-pink-300 shadow-lg hover:shadow-xl transition-all duration-200 hover:from-pink-500 hover:to-pink-600"
           onClick={handleCompleteChecklist}
           isDisabled={completedCount < totalItems}
         >
           <Icon icon="lucide:check-circle" className="mr-2" />
           Complete Final Checklist ({completedCount}/{totalItems})
         </Button>
-        <Button color="primary" className="w-full max-w-md">
+        <Button 
+          color="primary" 
+          variant="solid"
+          className="w-full max-w-md bg-gradient-to-r from-white to-pink-50 text-pink-700 border-2 border-pink-200 shadow-lg hover:shadow-xl transition-all duration-200 hover:from-pink-50 hover:to-pink-100"
+        >
           <Icon icon="lucide:message-square" className="mr-2" />
           Schedule Graduation Meeting
         </Button>
       </div>
 
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
-        <ModalContent>
+      <Modal 
+        isOpen={isOpen} 
+        onOpenChange={onOpenChange}
+        classNames={{
+          backdrop: "z-[99999] !fixed",
+          base: "z-[100000] !fixed",
+          wrapper: "z-[99999] !fixed"
+        }}
+        style={{
+          zIndex: 100000
+        }}
+      >
+        <ModalContent className="bg-white shadow-2xl border-2 border-pink-200">
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1">

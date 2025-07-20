@@ -101,6 +101,9 @@ export const NotificationBell: React.FC = () => {
       onOpenChange={setIsOpen}
       placement="bottom-end"
       showArrow={true}
+      classNames={{
+        content: "bg-white border border-pink-200 shadow-2xl z-[9999]"
+      }}
     >
       <PopoverTrigger>
         <Button

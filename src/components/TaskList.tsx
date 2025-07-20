@@ -55,30 +55,59 @@ export const TaskList: React.FC = () => {
       <Button color="primary" className="mt-4 w-full" onPress={onOpen}>
         View All Tasks
       </Button>
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange} size="2xl">
+      <Modal 
+        isOpen={isOpen} 
+        onOpenChange={onOpenChange} 
+        size="2xl"
+        classNames={{
+          backdrop: "bg-black/50 backdrop-blur-sm",
+          base: "bg-gradient-to-br from-pink-50 to-white border border-pink-200 shadow-2xl",
+          header: "bg-gradient-to-r from-pink-100 to-white border-b border-pink-200",
+          body: "bg-white/80",
+          footer: "bg-gradient-to-r from-white to-pink-50 border-t border-pink-200"
+        }}
+        style={{ zIndex: 9999 }}
+      >
         <ModalContent>
           {(onClose) => (
             <>
-              <ModalHeader className="flex flex-col gap-1">All Onboarding Tasks</ModalHeader>
+              <ModalHeader className="flex flex-col gap-1 text-gray-800">
+                <h3 className="text-xl font-semibold">All Onboarding Tasks</h3>
+                <p className="text-sm text-gray-600">Track your progress through all onboarding activities</p>
+              </ModalHeader>
               <ModalBody>
-                <ul className="space-y-3">
+                <ul className="space-y-3 max-h-96 overflow-y-auto">
                   {selectedTasks.map((task) => (
-                    <li key={task.id} className="flex items-center justify-between">
+                    <li key={task.id} className="flex items-center justify-between p-3 rounded-lg hover:bg-pink-50 transition-colors">
                       <Checkbox
                         isSelected={task.completed}
                         onValueChange={() => toggleTask(task.id)}
                         color={task.completed ? "success" : "default"}
+                        classNames={{
+                          base: "hover:bg-pink-100",
+                          wrapper: "hover:scale-105 transition-transform"
+                        }}
                       >
-                        <span className={task.completed ? "line-through text-success" : ""}>
+                        <span className={`${task.completed ? "line-through text-success" : "text-gray-700"} font-medium`}>
                           {task.title}
                         </span>
                       </Checkbox>
+                      <div className="flex items-center gap-2">
+                        {task.completed && (
+                          <Icon icon="lucide:check-circle" className="text-success text-lg" />
+                        )}
+                      </div>
                     </li>
                   ))}
                 </ul>
               </ModalBody>
               <ModalFooter>
-                <Button color="danger" variant="light" onPress={onClose}>
+                <Button 
+                  color="primary" 
+                  variant="flat" 
+                  onPress={onClose}
+                  className="bg-gradient-to-r from-pink-500 to-pink-600 text-white hover:from-pink-600 hover:to-pink-700"
+                >
                   Close
                 </Button>
               </ModalFooter>

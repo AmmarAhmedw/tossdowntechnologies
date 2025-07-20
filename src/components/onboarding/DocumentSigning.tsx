@@ -34,6 +34,10 @@ export const DocumentSigning: React.FC = () => {
               color={doc.signed ? "success" : "primary"}
               onPress={() => handleSign(doc.id)}
               disabled={doc.signed}
+              className={doc.signed 
+                ? "bg-green-500 text-white rounded-full" 
+                : "border-2 border-blue-500 text-blue-500 bg-transparent hover:bg-blue-50 rounded-full"
+              }
             >
               {doc.signed ? "Signed" : "Sign Document"}
             </Button>
