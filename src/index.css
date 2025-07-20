@@ -1,0 +1,39 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --primary: 330 81% 60%;
+    --primary-foreground: 0 0% 98%;
+  }
+}
+
+@layer base {
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Custom pink theme styles */
+.bg-pink-gradient {
+  background: linear-gradient(135deg, #fdf2f8 0%, #fce7f3 100%);
+}
+
+.text-pink-primary {
+  color: #ec4899;
+}
+
+.border-pink-primary {
+  border-color: #ec4899;
+}
+
+.bg-pink-primary {
+  background-color: #ec4899;
+}
+
+.hover\:bg-pink-600:hover {
+  background-color: #db2777;
+}
